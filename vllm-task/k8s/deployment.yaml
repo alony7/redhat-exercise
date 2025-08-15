@@ -47,14 +47,14 @@ spec:
             httpGet:
               path: /v1/models
               port: http
-            initialDelaySeconds: 150
+            initialDelaySeconds: 200
             timeoutSeconds: 5
             periodSeconds: 10
           livenessProbe:
             httpGet:
               path: /health
               port: http
-            initialDelaySeconds: 150
+            initialDelaySeconds: 200
             timeoutSeconds: 5
             periodSeconds: 20
 ---
