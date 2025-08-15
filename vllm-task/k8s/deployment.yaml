@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vllm
+  namespace: vllm-demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: vllm
+  template:
+    metadata:
+      labels:
+        app: vllm
+    spec:
+      enableServiceLinks: false 
+      containers:
+        - name: vllm
+          image: substratusai/vllm:main-cpu
+          imagePullPolicy: IfNotPresent
+
+          command:
+            - python3
+            - -m
+            - vllm.entrypoints.openai.api_server
+            - "--host"
+            - "0.0.0.0"
+            - "--port"
+            - "8000"
+            - "--model"
+            - "HuggingFaceTB/SmolLM2-360M-Instruct"
+            - "--device"
+            - "cpu"
+            - "--dtype"
+            - "float32"
+          ports:
+            - name: http
+              containerPort: 8000
+          resources:
+            requests:
+              cpu: "2"
+              memory: "4Gi"
+            limits:
+              cpu: "4"
+              memory: "8Gi"
+          readinessProbe:
+            httpGet:
+              path: /v1/models
+              port: http
+            initialDelaySeconds: 200
+            timeoutSeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: http
+            initialDelaySeconds: 200
+            timeoutSeconds: 5
+            periodSeconds: 20
+---
