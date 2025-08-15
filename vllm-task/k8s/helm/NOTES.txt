@@ -1,0 +1,7 @@
+Access:
+- vLLM API:        http://localhost:8000/
+  * health/models: http://localhost:8000/v1/models
+- Streamlit UI:    http://localhost:8000{{ .Values.ingress.streamlitPath }}
+
+The chart installs ingress-nginx as a dependency and binds NodePort 8000 (HTTP) and 8443 (HTTPS).
+Update model/dtype/replicas/resources via --set / values.yaml and helm upgrade.

@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.vllm.name }}-streamlit-app
+  namespace: {{ .Values.vllm.name }}
+data:
+  app.py: |
+    {{ .Files.Get "../files/app.py" | indent 4 }}

@@ -1,0 +1,15 @@
+vllm:
+  name: vllm-demo
+  model:
+    name: "HuggingFaceTB/SmolLM2-360M-Instruct"
+  dtype: float32
+  replicas: 1
+  resources:
+      requests:
+        memory: "4Gi"
+        cpu: "2"
+      limits:
+        memory: "8Gi"
+        cpu: "4"
+
+
