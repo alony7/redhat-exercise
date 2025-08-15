@@ -208,5 +208,5 @@ __marimo__/
 
 #helm
 *.iml
-*/.idea/*
+.idea/
 
