@@ -1,0 +1,20 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: vllm
+  namespace: vllm-demo
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-body-size: "64m"
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: localhost
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: vllm
+                port:
+                  number: 8000
