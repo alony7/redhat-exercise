@@ -1,0 +1,42 @@
+# k8s/streamlit/deployment.yaml (only the command/args changed)
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vllm-demo-streamlit
+  namespace: vllm-demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: vllm-demo-streamlit
+  template:
+    metadata:
+      labels:
+        app: vllm-demo-streamlit
+    spec:
+      containers:
+        - name: streamlit
+          image: python:3.11-slim
+          env:
+            - name: VLLM_METRICS_URL
+              value: "http://vllm:8000/metrics"
+            - name: REFRESH_MS
+              value: "5000"
+          ports:
+            - name: http
+              containerPort: 8501
+          volumeMounts:
+            - name: app
+              mountPath: /app
+          command: ["/bin/sh","-lc"]
+          args:
+            - |
+              pip install --no-cache-dir streamlit requests streamlit-autorefresh && \
+              streamlit run /app/app.py --server.port 8501 --server.address 0.0.0.0
+      volumes:
+        - name: app
+          configMap:
+            name: vllm-demo-streamlit-app
+            items:
+              - key: app.py
+                path: app.py
