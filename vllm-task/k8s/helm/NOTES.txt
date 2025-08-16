@@ -5,3 +5,14 @@ Access:
 
 The chart installs ingress-nginx as a dependency and binds NodePort 8000 (HTTP) and 8443 (HTTPS).
 Update model/dtype/replicas/resources via --set / values.yaml and helm upgrade.
+
+NOTE:
+
+# Reinstall the standard kind deployment (or your preferred method)
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy.yaml
+
+# Wait until ready
+kubectl -n ingress-nginx rollout status deploy/ingress-nginx-controller
+kubectl -n ingress-nginx get svc ingress-nginx-controller-admission
+kubectl create namespace vllm-demo
+helm install vllm-demo .  -n vllm-demo

@@ -1,8 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Values.vllm.name }}
-  namespace: {{ .Values.vllm.name }}
+  name: vllm
 spec:
   replicas: {{ .Values.vllm.replicas }}
   selector:
@@ -42,7 +41,7 @@ spec:
               memory: {{ .Values.vllm.resources.requests.memory }}
             limits:
               cpu: {{ .Values.vllm.resources.limits.cpu }}
-              memory: {{ .Values.vllm.resources.limits.cpu }}
+              memory: {{ .Values.vllm.resources.limits.memory }}
           readinessProbe:
             httpGet:
               path: /v1/models

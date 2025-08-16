@@ -2,24 +2,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Values.vllm.name }}-streamlit
-  namespace: {{ .Values.vllm.name }}
+  name: vllm-streamlit
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: {{ .Values.vllm.name }}-streamlit
+      app: vllm-streamlit
   template:
     metadata:
       labels:
-        app: {{ .Values.vllm.name }}-streamlit
+        app: vllm-streamlit
     spec:
       containers:
         - name: streamlit
           image: python:3.11-slim
           env:
             - name: VLLM_METRICS_URL
-              value: "http://{{ .Values.vllm.name }}:8000/metrics"
+              value: "http://vllm:8000/metrics"
             - name: REFRESH_MS
               value: "5000"
           ports:
@@ -36,7 +35,7 @@ spec:
       volumes:
         - name: app
           configMap:
-            name: {{ .Values.vllm.name }}-streamlit-app
+            name: vllm-streamlit-app
             items:
               - key: app.py
                 path: app.py

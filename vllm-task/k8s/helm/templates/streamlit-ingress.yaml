@@ -1,8 +1,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: {{ .Values.vllm.name }}-streamlit
-  namespace: {{ .Values.vllm.name }}
+  name: vllm-streamlit
 spec:
   ingressClassName: nginx
   rules:
@@ -13,6 +12,6 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: {{ .Values.vllm.name }}-streamlit
+                name: vllm-streamlit
                 port:
                   number: 8501

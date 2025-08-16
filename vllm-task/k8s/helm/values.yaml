@@ -1,5 +1,4 @@
 vllm:
-  name: vllm-demo
   model:
     name: "HuggingFaceTB/SmolLM2-360M-Instruct"
   dtype: float32
