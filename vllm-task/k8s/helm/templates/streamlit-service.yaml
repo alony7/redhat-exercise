@@ -7,6 +7,5 @@ spec:
   selector:
     app: vllm-streamlit
   ports:
-    - name: http
-      port: 8501
+    - port: 8501
       targetPort: http

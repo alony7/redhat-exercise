@@ -1,0 +1,47 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: vllm-and-streamlit
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: localhost
+      http:
+        paths:
+          # IMPORTANT: Order matters! More specific paths first
+          # Streamlit static assets
+          - path: /static
+            pathType: Prefix
+            backend:
+              service:
+                name: vllm-streamlit
+                port:
+                  number: 8501
+
+          # Streamlit internal endpoints
+          - path: /_stcore
+            pathType: Prefix
+            backend:
+              service:
+                name: vllm-streamlit
+                port:
+                  number: 8501
+
+          # Dashboard page
+          - path: /dashboard
+            pathType: Prefix
+            backend:
+              service:
+                name: vllm-streamlit
+                port:
+                  number: 8501
+
+
+          # Default - everything else goes to vLLM
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: vllm
+                port:
+                  number: 8000

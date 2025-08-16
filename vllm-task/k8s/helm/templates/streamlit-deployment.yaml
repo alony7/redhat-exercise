@@ -27,10 +27,11 @@ spec:
           volumeMounts:
             - name: app
               mountPath: /app
-          command: ["/bin/sh","-lc"]
-          args:
+          command:
+            - "/bin/bash"
+            - "-c"
             - |
-              pip install --no-cache-dir streamlit requests streamlit-autorefresh && \
+              pip install --no-cache-dir streamlit requests  && \
               streamlit run /app/app.py --server.port 8501 --server.address 0.0.0.0
       volumes:
         - name: app
