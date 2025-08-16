@@ -1,0 +1,6 @@
+apiVersion: v2
+name: vllm-test
+description: vLLM + Streamlit in one chart
+type: application
+version: 0.1.1
+appVersion: "1.0.0"
