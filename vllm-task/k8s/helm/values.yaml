@@ -1,6 +1,6 @@
 vllm:
   model:
-    name: "HuggingFaceTB/SmolLM2-360M-Instruct"
+    name: "microsoft/DialoGPT-small"
   dtype: float32
   replicas: 1
   resources:
